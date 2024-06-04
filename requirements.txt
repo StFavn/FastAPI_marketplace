@@ -1,0 +1,7 @@
+fastapi[all]
+SQLAlchemy==2.0.21
+alembic==1.12.0
+fastapi-users[sqlalchemy]
+sqladmin==0.15.1
+python-json-logger==2.0.7
+gunicorn==21.2.0
