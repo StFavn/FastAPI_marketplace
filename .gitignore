@@ -1,4 +1,17 @@
+# Библиотеки
 venv/
-*.db
+migrations/
+alembic.ini
+
+# Системные файлы
 __pycache__
+.vscode/
+
+# Тестовые данные
+*.db
+# app/static/
+
+# Переменные окружения
 .env
+.env-docker
+.env-render
