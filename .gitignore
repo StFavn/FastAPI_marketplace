@@ -1,7 +1,5 @@
 # Библиотеки
 venv/
-migrations/
-alembic.ini
 
 # Системные файлы
 __pycache__
