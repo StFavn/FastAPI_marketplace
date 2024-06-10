@@ -6,8 +6,8 @@ from sqlalchemy import engine_from_config, pool
 from app.config import settings
 from app.database.base_model import Base
 from app.modules.categories.models import CategoryModel
+from app.modules.goods.models import GoodsModel
 # from app.modules.carts.models import CartModel
-# from app.modules.goods.models import GoodsModel
 # from app.modules.orders.models import PurcasesModel
 # from app.modules.reviews.models import ReviewModel
 # from app.modules.comments.models import CommentsModel

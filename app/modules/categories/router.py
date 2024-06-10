@@ -1,5 +1,7 @@
+from datetime import date, datetime
 from typing import List
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
+# from fastapi_cache.decorator import cache
 
 from app.exceptions import (
     DatabaseErrorException,
@@ -10,7 +12,12 @@ from app.modules.users.manager import current_superuser
 from app.modules.users.models import UserModel
 
 from .dao import CategoryDAO
-from .schemas import SCategoryCreate, SCategoryRead, SCategoryUpdate
+from .schemas import (
+    SCategoryCreate,
+    SCategoryGoodsRead,
+    SCategoryRead,
+    SCategoryUpdate
+)
 
 router = APIRouter(
     prefix='/categories',
@@ -25,11 +32,11 @@ async def create_category(
     """Создание новой категории."""
 
     # Проверка на наличие категории
-    category_exists = await CategoryDAO.get_one(name=data.name)
+    category_exists = await CategoryDAO.get_object(name=data.name)
     if category_exists:
         raise ObjectAlreadyExistsException
 
-    new_category = await CategoryDAO.create(**data.model_dump())
+    new_category = await CategoryDAO.add_object(**data.model_dump())
 
     # Проверка на успешное добавление
     if not new_category:
@@ -43,7 +50,7 @@ async def create_category(
 @router.get('', response_model=List[SCategoryRead])
 async def get_all_categories():
     """Возврат всех категорий."""
-    categories = await CategoryDAO.get_all()
+    categories = await CategoryDAO.get_all_objects()
 
     # Проверка на успешное получение
     if not categories:
@@ -55,7 +62,7 @@ async def get_all_categories():
 @router.get('/{category_id}', response_model=SCategoryRead)
 async def get_category(category_id: int):
     """Возвращение категории по id"""
-    category = await CategoryDAO.get_one(id=category_id)
+    category = await CategoryDAO.get_object(id=category_id)
 
     # Проверка на успешное получение
     if not category:
@@ -72,7 +79,7 @@ async def update_category(
 ):
     """Обновление названия категории."""
 
-    category = await CategoryDAO.update(
+    category = await CategoryDAO.update_object(
         update_data=update_data, id=category_id
     )
 
@@ -88,7 +95,7 @@ async def delete_category(
     category_id: int, user: UserModel = Depends(current_superuser)
 ):
     """Удаление каатегории."""
-    result = await CategoryDAO.delete(id=category_id)
+    result = await CategoryDAO.delete_object(id=category_id)
 
     # Проверка на успешное удаление
     if not result:
@@ -97,3 +104,20 @@ async def delete_category(
         )
     
     return result
+
+
+@router.get('/{category_id}/goods', response_model=List[SCategoryGoodsRead])
+# @cache(expire=60)
+async def get_all_category_goods(
+        category_id: int,
+        date: date = Query(default=datetime.now().date())
+    ):
+        """Возвращает список всех товаров категории."""
+        category_goods = await CategoryDAO.get_all_category_goods_objects(
+            category_id=category_id,
+            date=date,
+        )
+
+        if not category_goods:
+            raise NotFoundException
+        return category_goods

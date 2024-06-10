@@ -7,7 +7,7 @@ from app.logger import logger
 
 # Modules routing
 from app.modules.categories.router import router as categories_router
-# from app.modules.goods.router import router as goods_router
+from app.modules.goods.router import router as goods_router
 # from app.modules.carts.router import router as carts_router
 # from app.modules.purchases.router import router as purchases_router
 # from app.modules.reviews.router import router as reviews_router
@@ -29,10 +29,6 @@ async def lifespan(app: FastAPI):
         yield
     finally:
         logger.info(f'Service {app.title} SHUTDOWN')
-
-@app.get("/")
-async def root():
-    return {"message": "Hello World"}
 
 app.include_router(
     fastapi_users.get_auth_router(auth_backend),
@@ -67,7 +63,7 @@ app.include_router(
 )
 
 app.include_router(categories_router)
-# app.include_router(goods_router)
+app.include_router(goods_router)
 # app.include_router(orders_router)
 # app.include_router(reviews_router)
 # app.include_router(comments_router)

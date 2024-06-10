@@ -10,7 +10,7 @@ class BaseDAO:
     model = None
 
     @classmethod
-    async def get_one(cls, **kwargs):
+    async def get_object(cls, **kwargs):
         """Возвращение одного объекта модели из БД."""
         try:
             async with async_session_maker() as session:
@@ -27,7 +27,7 @@ class BaseDAO:
         return result.mappings().one_or_none()
     
     @classmethod
-    async def get_all(cls, **kwargs):
+    async def get_all_objects(cls, **kwargs):
         """Возвращение всех объектов модели из БД."""
         try:
             async with async_session_maker() as session:
@@ -46,7 +46,7 @@ class BaseDAO:
         return result.mappings().all()
     
     @classmethod
-    async def create(cls, **kwargs):
+    async def add_object(cls, **kwargs):
         """Добавление объекта в БД."""
         try:
             async with async_session_maker() as session:
@@ -64,7 +64,7 @@ class BaseDAO:
         return 'Данные успешно добавлены.'
     
     @classmethod
-    async def update(cls, update_data, **kwargs):
+    async def update_object(cls, update_data, **kwargs):
         """Обновление данных объекта в БД."""
         try:
             async with async_session_maker() as session:
@@ -89,7 +89,7 @@ class BaseDAO:
         return result
     
     @classmethod
-    async def delete(cls, **kwargs):
+    async def delete_object(cls, **kwargs):
         """Удаление объекта из БД."""
         try:
             async with async_session_maker() as session:
