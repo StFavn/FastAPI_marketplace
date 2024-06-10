@@ -15,6 +15,13 @@ class Settings(BaseSettings):
     POSTGRES_USER: str
     POSTGRES_PASSWORD: str
 
+    TEST_PG_DB_NAME: str
+    TEST_PG_HOST: str
+    TEST_PG_PORT: int
+    TEST_PG_USER: str
+    TEST_PG_PASSWORD: str
+
+
     SECRET_KEY: str
     ALGORITHM: str
 
@@ -23,9 +30,14 @@ class Settings(BaseSettings):
 
     @property
     def DATABASE_URL(self):
-        return (f'postgresql+asyncpg://{self.POSTGRES_USER}:'
-                f'{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:'
-                f'{self.POSTGRES_PORT}/{self.POSTGRES_DB_NAME}')
+        if self.MODE == 'DEV':
+            return (f'postgresql+asyncpg://{self.POSTGRES_USER}:'
+                    f'{self.POSTGRES_PASSWORD}@{self.POSTGRES_HOST}:'
+                    f'{self.POSTGRES_PORT}/{self.POSTGRES_DB_NAME}')
+        elif self.MODE == 'TEST':
+            return (f'postgresql+asyncpg://{self.TEST_PG_USER}:'
+                    f'{self.TEST_PG_PASSWORD}@{self.TEST_PG_HOST}:'
+                    f'{self.TEST_PG_PORT}/{self.TEST_PG_DB_NAME}')
 
     # для локальной разработки
     model_config = SettingsConfigDict(env_file='.env')

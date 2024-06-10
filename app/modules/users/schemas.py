@@ -1,12 +1,11 @@
-from typing import Optional
 
 from fastapi_users import schemas
-from pydantic import EmailStr
+from pydantic import ConfigDict, EmailStr
 
 
 class SUserRead(schemas.BaseUser[int]):
     """Схема отображения пользователя."""
-
+    
     id:           int
     username:     str
     first_name:   str | None = None
@@ -16,7 +15,8 @@ class SUserRead(schemas.BaseUser[int]):
     is_superuser: bool = False
     is_verified:  bool = False
 
-    class Config: from_attributes = True
+    class ConfigDict(ConfigDict):
+        allow_population_by_field_name = True
 
 class SUserCreate(schemas.BaseUserCreate):
     """Схема создания пользователя."""

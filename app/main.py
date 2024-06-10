@@ -1,6 +1,8 @@
 # импорт из стандартной библиотеки
 from fastapi import FastAPI
+import contextlib
 
+# импорт собственных утилит
 from app.logger import logger
 
 # Modules routing
@@ -16,15 +18,17 @@ from app.modules.users.config import auth_backend
 from app.modules.users.manager import fastapi_users
 from app.modules.users.schemas import SUserCreate, SUserRead, SUserUpdate
 
-def lifespan(app: FastAPI):
-    logger.info(f'Service {app.title} STARTUP.')
-    yield
-    logger.info(f'Service {app.title} SHUTDOWN')
-
 app = FastAPI(
-    title='marketplace',
-    lifespan=lifespan
+    title='marketplace'
 )
+
+@contextlib.asynccontextmanager
+async def lifespan(app: FastAPI):
+    logger.info(f'Service {app.title} STARTUP.')
+    try:
+        yield
+    finally:
+        logger.info(f'Service {app.title} SHUTDOWN')
 
 @app.get("/")
 async def root():
