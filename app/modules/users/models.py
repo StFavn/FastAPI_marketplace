@@ -10,27 +10,7 @@ from app.database.base_model import Base
 
 
 class UserModel(SQLAlchemyBaseUserTable[int], Base):
-    """Модель пользователя.
 
-Параметры relationship:  
-back_populates='buyer': Этот параметр указывает, что на стороне объекта Purchase также существует отношение, 
-которое ссылается на объект User. Поле buyer в модели Purchase будет использоваться для обратной связи. 
-Это позволяет двустороннюю навигацию между пользователем и его покупками.  
-cascade='all, delete-orphan': Каскадные параметры управляют тем, как операции сессии 
-(такие как добавление, удаление и обновление) распространяются от родительского объекта 
-(в данном случае User) на связанные дочерние объекты (в данном случае Purchase).  
-
-Опции каскада:
-all: Применяет все каскадные действия.
-delete-orphan: Указывает, что если объект Purchase больше не связан с объектом User 
-(например, пользователь удален), то и Purchase также должен быть удален из базы данных.
-
-Наследование:
-Совместимость с FastAPI Users: Наследование от SQLAlchemyBaseUserTable 
-обеспечивает совместимость с fastapi-users, что позволяет легко использовать его функциональность 
-для регистрации, аутентификации и управления пользователями.  
-
-"""
     __tablename__ = 'users'
 
     id:              Mapped[int] = mapped_column(primary_key=True)
@@ -45,16 +25,16 @@ delete-orphan: Указывает, что если объект Purchase бол�
     is_verified:     Mapped[bool] = mapped_column(default=False)
 
     # image_id: Mapped[Optional[int]] = mapped_column(ForeignKey('images.id'))
-    # purchases: Mapped[List['Purchase']] = relationship(
+    # purchases: Mapped[List['PurchaseModel']] = relationship(
     #     back_populates='buyer', cascade='all, delete-orphan'
     # )
-    # reviews: Mapped[List['Review']] = relationship(
+    # reviews: Mapped[List['ReviewModel']] = relationship(
     #     back_populates='user', cascade='all, delete-orphan'
     # )
-    # comments: Mapped[List['Comment']] = relationship(
+    # comments: Mapped[List['CommentModel']] = relationship(
     #     back_populates='user', cascade='all, delete-orphan'
     # )
-    # in_cart: Mapped[List['Cart']] = relationship(
+    # in_cart: Mapped[List['CartModel']] = relationship(
     #     back_populates='user', cascade='all, delete-orphan'
     # )
     

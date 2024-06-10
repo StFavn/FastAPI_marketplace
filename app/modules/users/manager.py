@@ -15,7 +15,7 @@ class UserManager(IntegerIDMixin, BaseUserManager[UserModel, int]):
     verification_token_secret = settings.PASSWORD
 
     async def on_after_register(
-        self, user: UserModel, request: Optional[Request] = None
+        self, user: UserModel, request: Request | None = None
     ):
         print(f'Пользователь c id {user.id} был зарегистрирован.')
 
@@ -26,7 +26,7 @@ class UserManager(IntegerIDMixin, BaseUserManager[UserModel, int]):
               f'Токен сброса пароля: {token}')
 
     async def on_after_request_verify(
-        self, user: UserModel, token: str, request: Optional[Request] = None
+        self, user: UserModel, token: str, request: Request | None = None
     ):
         print(f'Запрошена верификация для пользователя с id {user.id}.'
               f'Токен верификации: {token}')

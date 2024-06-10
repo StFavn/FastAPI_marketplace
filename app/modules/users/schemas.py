@@ -4,42 +4,41 @@ from fastapi_users import schemas
 from pydantic import EmailStr
 
 
-class UserRead(schemas.BaseUser[int]):
-    """Модель отображения пользователя."""
+class SUserRead(schemas.BaseUser[int]):
+    """Схема отображения пользователя."""
 
-    id: int
-    username: str
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
-    email: EmailStr
-    is_active: bool = True
+    id:           int
+    username:     str
+    first_name:   str | None = None
+    last_name:    str | None = None
+    email:        EmailStr
+    is_active:    bool = True
     is_superuser: bool = False
-    is_verified: bool = False
+    is_verified:  bool = False
 
-    class Config:
-        from_attributes = True
+    class Config: from_attributes = True
 
-class UserCreate(schemas.BaseUserCreate):
-    """Модель создания пользователя."""
+class SUserCreate(schemas.BaseUserCreate):
+    """Схема создания пользователя."""
 
-    username: str
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
-    email: EmailStr
-    password: str
-    is_active: Optional[bool] = True
-    is_superuser: Optional[bool] = False
-    is_verified: Optional[bool] = False
+    username:     str
+    first_name:   str | None = None
+    last_name:    str | None = None
+    email:        EmailStr
+    password:     str
+    is_active:    bool | None = True
+    is_superuser: bool | None = False
+    is_verified:  bool | None = False
 
 
-class UserUpdate(schemas.BaseUserUpdate):
-    """Модель, позволяющая пользователю обновлять свои данные."""
+class SUserUpdate(schemas.BaseUserUpdate):
+    """Схема, позволяющая пользователю обновлять свои данные."""
 
-    username: Optional[str] = None
-    first_name: Optional[str] = None
-    last_name: Optional[str] = None
-    password: Optional[str] = None
-    email: Optional[EmailStr] = None
-    is_active: Optional[bool] = None
-    is_superuser: Optional[bool] = None
-    is_verified: Optional[bool] = None
+    username:     str | None = None
+    first_name:   str | None = None
+    last_name:    str | None = None
+    password:     str | None = None
+    email:        EmailStr | None = None
+    is_active:    bool | None = None
+    is_superuser: bool | None = None
+    is_verified:  bool | None = None
