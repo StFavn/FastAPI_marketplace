@@ -20,8 +20,8 @@ class GoodsModel(Base):
     category_id:    Mapped[int] = mapped_column(ForeignKey('categories.id'))
     
     category: Mapped['CategoryModel'] = relationship(back_populates='goods') # type: ignore
+    orders: Mapped[List['OrderModel']] = relationship(back_populates='goods') # type: ignore
     # image_id: Mapped[Optional[int]] = mapped_column(ForeignKey('images.id'))
-    # orders: Mapped[List['OrdersModel']] = relationship(back_populates='goods')
     # reviews: Mapped[List['ReviewModel']] = relationship(back_populates='goods')
 
     def __str__(self):

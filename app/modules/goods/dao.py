@@ -23,6 +23,7 @@ class GoodsDAO(BaseDAO):
             async with async_session_maker() as session:
                 goods = (
                     select(GoodsModel)
+                    .options(selectinload(GoodsModel.orders))
                     .options(joinedload(GoodsModel.category))
                 )
                 goods = await session.execute(goods)
