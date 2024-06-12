@@ -36,6 +36,7 @@ async def create_review(
 
     return review
 
+
 @router.get('/me', response_model=List[SReviewRead])
 async def get_all_reviews(user: UserModel = Depends(current_active_user)):
     """Возврат всех отзывов текущего пользователя."""
@@ -44,6 +45,7 @@ async def get_all_reviews(user: UserModel = Depends(current_active_user)):
     if not reviews:
         raise NotFoundException
     return reviews
+
 
 @router.get('/users/{user_id}', response_model=List[SReviewRead])
 async def get_all_reviews_by_user(user_id: int):
@@ -54,6 +56,7 @@ async def get_all_reviews_by_user(user_id: int):
         raise NotFoundException
     return reviews
 
+
 @router.get('/goods/{goods_id}', response_model=List[SReviewRead])
 async def get_all_reviews_by_goods(goods_id: int):
     """Возврат всех отзывов конкретного товара."""
@@ -63,6 +66,7 @@ async def get_all_reviews_by_goods(goods_id: int):
         raise NotFoundException
     return reviews
 
+
 @router.get('/{review_id}', response_model=SReviewRead)
 async def get_review(review_id: int):
     """Возвращает конкретный отзыв."""
@@ -71,6 +75,7 @@ async def get_review(review_id: int):
     if not review:
         raise NotFoundException
     return review
+
 
 @router.patch('/{review_id}', response_model=SReviewRead)
 async def update_review(
@@ -88,6 +93,7 @@ async def update_review(
     if not review:
         raise DatabaseErrorException(detail='Не удалось обновить данные.')
     return review
+
 
 @router.delete('/{review_id}')
 async def delete_review(

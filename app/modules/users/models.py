@@ -29,15 +29,15 @@ class UserModel(SQLAlchemyBaseUserTable[int], Base):
     orders: Mapped[List['OrderModel']] = relationship( # type: ignore
         back_populates='buyer', cascade='all, delete-orphan'
     )
-    reviews: Mapped[List['ReviewModel']] = relationship( # type: ignore
-        back_populates='reviewer', cascade='all, delete-orphan'
-    )
     in_cart: Mapped[List['CartModel']] = relationship( # type: ignore
         back_populates='customer', cascade='all, delete-orphan'
     )
-    # comments: Mapped[List['CommentModel']] = relationship(
-    #     back_populates='user', cascade='all, delete-orphan'
-    # )
+    reviews: Mapped[List['ReviewModel']] = relationship( # type: ignore
+        back_populates='reviewer', cascade='all, delete-orphan'
+    )
+    comments: Mapped[List['CommentModel']] = relationship( # type: ignore
+        back_populates='writer', cascade='all, delete-orphan'
+    )
     
     def __str__(self):
         return f'Пользователь:id - {self.id}, username - {self.username}'

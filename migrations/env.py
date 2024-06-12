@@ -10,7 +10,7 @@ from app.modules.goods.models import GoodsModel
 from app.modules.orders.models import OrderModel
 from app.modules.reviews.models import ReviewModel
 from app.modules.carts.models import CartModel
-# from app.modules.comments.models import CommentsModel
+from app.modules.comments.models import CommentModel
 
 from app.modules.users.models import UserModel
 

@@ -27,7 +27,8 @@ class ReviewModel(Base):
 
     reviewer: Mapped['UserModel'] = relationship(back_populates='reviews') # type: ignore
     goods: Mapped['GoodsModel'] = relationship(back_populates='reviews') # type: ignore
-    # comments: Mapped[List['CommentModel']] = relationship(back_populates='review') # type: ignore
+    comments: Mapped[List['CommentModel']] = relationship( # type: ignore
+        back_populates='review', cascade='all, delete-orphan') 
 
     def __str__(self):
-        return f'Ревью:id - {self.id}, написано - {self.when}'
+        return f'Отзыв:id - {self.id}, написано - {self.when}'
