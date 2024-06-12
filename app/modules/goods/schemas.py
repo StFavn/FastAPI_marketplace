@@ -3,7 +3,7 @@ from typing import Optional
 from pydantic import BaseModel
 
 
-class GoodsRead(BaseModel):
+class SGoodsRead(BaseModel):
     """Модель отображения товара."""
 
     id:             int
@@ -16,7 +16,7 @@ class GoodsRead(BaseModel):
     # image_id:       int
 
 
-class GoodsCreate(BaseModel):
+class SGoodsCreate(BaseModel):
     """Модель для добавления товара."""
 
     name:           str
@@ -27,7 +27,7 @@ class GoodsCreate(BaseModel):
     # image_id:       int
 
 
-class GoodsUpdate(BaseModel):
+class SGoodsUpdate(BaseModel):
     """Модель для обновления товара."""
 
     name:           str | None = None
@@ -36,3 +36,8 @@ class GoodsUpdate(BaseModel):
     on_stock:       bool | None = None
     category_id:    str | None = None
     # image_id:       str | None = None
+
+class SGoodsRecalculate(BaseModel):
+    """Модель для пересчета средней оценки."""
+
+    average_rating: float

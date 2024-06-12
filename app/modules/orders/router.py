@@ -1,7 +1,5 @@
 from typing import List
-
 from fastapi import APIRouter, Depends
-
 
 from app.exceptions import DatabaseErrorException, NotFoundException
 from app.modules.users.manager import current_active_user
@@ -30,9 +28,26 @@ async def create_order(
         raise DatabaseErrorException(
             detail='Не удалось добавить запись в базу данных.'
         )
-
-
     return order
+
+
+@router.post('/cart')
+async def create_orders_from_cart(
+    user: UserModel = Depends(current_active_user)
+):
+    """
+    Позволяет добавить к покупке все товары из корзины.
+    Отчищает корзину.
+    """
+    orders = await OrderDAO.add_orders_from_cart(
+        user_id=user.id
+    )
+
+    if not orders:
+        raise DatabaseErrorException(
+            detail='Не удалось добавить запись в базу данных.'
+        )
+    return orders
 
 
 @router.get('', response_model=List[SOrderRead])
@@ -71,3 +86,14 @@ async def delete_order(
             detail='Не удалось удалить запись из базы данных.'
         )
     return result
+
+# from pydantic import TypeAdapter
+# from app.tasks.tasks import send_order_confirmation_email
+    # order_dict = (
+    #     TypeAdapter(SOrderRead).validate_python(order).model_dump()
+    # )
+    # send_order_confirmation_email.delay(
+    #     order=order_dict,
+    #     username=user.username,
+    #     email_to=user.email
+    # )

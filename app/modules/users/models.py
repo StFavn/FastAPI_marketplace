@@ -10,15 +10,8 @@ from app.database.base_model import Base
 
 
 class UserModel(SQLAlchemyBaseUserTable[int], Base):
-    """Модель пользователя.
+    """Модель пользователя."""
 
-Опции каскада:
-all: Применяет все каскадные действия.
-delete-orphan: Указывает, что если объект Order больше не связан с объектом User 
-(например, пользователь удален), то и Order также должен быть удален из базы данных.
-
-
-"""
     __tablename__ = 'users'
 
     id:              Mapped[int] = mapped_column(primary_key=True)
@@ -39,10 +32,10 @@ delete-orphan: Указывает, что если объект Order больш
     reviews: Mapped[List['ReviewModel']] = relationship( # type: ignore
         back_populates='reviewer', cascade='all, delete-orphan'
     )
+    in_cart: Mapped[List['CartModel']] = relationship( # type: ignore
+        back_populates='customer', cascade='all, delete-orphan'
+    )
     # comments: Mapped[List['CommentModel']] = relationship(
-    #     back_populates='user', cascade='all, delete-orphan'
-    # )
-    # in_cart: Mapped[List['CartModel']] = relationship(
     #     back_populates='user', cascade='all, delete-orphan'
     # )
     

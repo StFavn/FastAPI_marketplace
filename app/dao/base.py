@@ -107,3 +107,26 @@ class BaseDAO:
             )
             return None
         return 'Удаление успешно завершено.'
+    
+    @classmethod
+    async def delete_all_objects(cls, **kwargs):
+        """Удаление всех объектов из БД."""
+        try:
+            async with async_session_maker() as session:
+                async with session.begin():
+                    query = select(cls.model).filter_by(**kwargs)
+                    results = await session.execute(query)
+                    results = results.scalars().all()
+
+                    for result in results:
+                        await session.delete(result)
+
+        except (SQLAlchemyError, Exception) as error:
+            message = f'An error has occurred: {error}'
+            logger.error(
+                message,
+                extra={'Database table': cls.model.__tablename__},
+                exc_info=True
+            )
+            return None
+        return 'Удаление всех объектов успешно завершено.'

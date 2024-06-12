@@ -9,6 +9,7 @@ from app.modules.users.models import UserModel
 from .dao import ReviewDAO
 from .schemas import SReviewCreate, SReviewRead, SReviewUpdate
 
+
 router = APIRouter(
     prefix='/reviews',
     tags=['reviews']
