@@ -9,8 +9,8 @@ from app.logger import logger
 from app.modules.categories.router import router as categories_router
 from app.modules.goods.router import router as goods_router
 from app.modules.orders.router import router as orders_router
+from app.modules.reviews.router import router as reviews_router
 # from app.modules.carts.router import router as carts_router
-# from app.modules.reviews.router import router as reviews_router
 # from app.modules.comments.router import router as comments_router
 
 # User routing
@@ -65,6 +65,6 @@ app.include_router(
 app.include_router(categories_router)
 app.include_router(goods_router)
 app.include_router(orders_router)
+app.include_router(reviews_router)
 # app.include_router(carts_router)
-# app.include_router(reviews_router)
 # app.include_router(comments_router)

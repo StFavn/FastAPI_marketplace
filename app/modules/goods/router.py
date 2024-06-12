@@ -47,9 +47,6 @@ async def get_goods():
     return goods
 
 
-
-
-
 @router.get('/{goods_id}', response_model=GoodsRead)
 async def get_good(goods_id: int):
     """Возвращение товара по id."""

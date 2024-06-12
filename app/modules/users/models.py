@@ -36,9 +36,9 @@ delete-orphan: Указывает, что если объект Order больш
     orders: Mapped[List['OrderModel']] = relationship( # type: ignore
         back_populates='buyer', cascade='all, delete-orphan'
     )
-    # reviews: Mapped[List['ReviewModel']] = relationship(
-    #     back_populates='user', cascade='all, delete-orphan'
-    # )
+    reviews: Mapped[List['ReviewModel']] = relationship( # type: ignore
+        back_populates='reviewer', cascade='all, delete-orphan'
+    )
     # comments: Mapped[List['CommentModel']] = relationship(
     #     back_populates='user', cascade='all, delete-orphan'
     # )

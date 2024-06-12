@@ -1,5 +1,4 @@
 from datetime import datetime
-from typing import List, Optional
 
 from sqlalchemy import DateTime, ForeignKey, String
 from sqlalchemy.orm import Mapped, mapped_column, relationship
@@ -25,3 +24,4 @@ class OrderModel(Base):
 
     def __str__(self):
         return f'Покупка:id - {self.id}, совершена - {self.when}'
+    

@@ -22,7 +22,7 @@ class GoodsModel(Base):
     category: Mapped['CategoryModel'] = relationship(back_populates='goods') # type: ignore
     orders: Mapped[List['OrderModel']] = relationship(back_populates='goods') # type: ignore
     # image_id: Mapped[Optional[int]] = mapped_column(ForeignKey('images.id'))
-    # reviews: Mapped[List['ReviewModel']] = relationship(back_populates='goods')
+    reviews: Mapped[List['ReviewModel']] = relationship(back_populates='goods') # type: ignore
 
     def __str__(self):
         return f'Товар:id - {self.id}, название - {self.name}'
